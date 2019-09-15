@@ -19,16 +19,16 @@ public class NightModeManager : MonoBehaviour
 	{
 		foreach (TextMeshProUGUI textMesh in text)
 		{
-			textMesh.color = NightTime ? SavedData.data.nightText : SavedData.data.dayText;
+			textMesh.color = NightTime ? SavedData.data.nightText.ToColor() : SavedData.data.dayText.ToColor();
 		}
 		foreach (Image image in images)
 		{
-			image.color = NightTime ? SavedData.data.nightImage : SavedData.data.dayImage;
+			image.color = NightTime ? SavedData.data.nightImage.ToColor() : SavedData.data.dayImage.ToColor();
 		}
 
 		statusIcon.sprite = Resources.Load<Sprite>(NightTime ? "moon" : "sun");
-		background.color = NightTime ? SavedData.data.nightBackground : SavedData.data.dayBackground;
-		border.color = NightTime ? SavedData.data.nightBorder : SavedData.data.dayBorder;
+		background.color = NightTime ? SavedData.data.nightBackground.ToColor() : SavedData.data.dayBackground.ToColor();
+		border.color = NightTime ? SavedData.data.nightBorder.ToColor() : SavedData.data.dayBorder.ToColor();
 		nightSky.enabled = NightTime;
 
 		ParticleSystem.MainModule newMain = system.main;

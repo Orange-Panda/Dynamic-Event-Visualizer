@@ -14,14 +14,8 @@ public static class SavedData
 	/// <summary>
 	/// Save the serializable data to the disk.
 	/// </summary>
-	public static void SaveGame(bool forceSave = false)
+	public static void SaveGame()
 	{
-		if (!loadedFromSave && !forceSave)
-		{
-			Debug.LogError("There was an attempt to save the game but a load was never attempted. Avoiding save to prevent data loss.");
-			return;
-		}
-
 		//Initialize saving process, save to disk, then close the saving process.
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + FileName);
@@ -53,7 +47,7 @@ public static class SavedData
 	public static void ResetSettings()
 	{
 		data = new SaveFile();
-		SaveGame(true);
+		SaveGame();
 	}
 }
 
@@ -62,6 +56,7 @@ public enum CountdownTimer
 	Primary, Secondary
 }
 
+[Serializable]
 public class CountdownSettings
 {
 	public bool useCountdown = true;
@@ -70,6 +65,37 @@ public class CountdownSettings
 	public string expiredText = "Countdown Over!";
 	public DateTime objective = new DateTime(2019, 9, 15);
 }
+
+[Serializable]
+public struct SavedColor
+{
+	public float r;
+	public float g;
+	public float b;
+	public float a;
+
+	public SavedColor(float r, float g, float b, float a = 1f)
+	{
+		this.r = r;
+		this.g = g;
+		this.b = b;
+		this.a = a;
+	}
+
+	public SavedColor(Color color)
+	{
+		r = color.r;
+		g = color.g;
+		b = color.b;
+		a = color.a;
+	}
+
+	public Color ToColor()
+	{
+		return new Color(r, g, b, a);
+	}
+}
+
 
 [Serializable]
 public class SaveFile
@@ -85,14 +111,14 @@ public class SaveFile
 	public string nightClockFormat = "{1}:{2}{5}";
 
 	//Colors
-	public Color dayBackground = new Color(1f, 1f, 1f, 0.7f);
-	public Color nightBackground = new Color(0f, 0f, 0f, 0.5f);
-	public Color dayBorder = Color.black;
-	public Color nightBorder = Color.white;
-	public Color dayText = Color.black;
-	public Color nightText = Color.white;
-	public Color dayImage = Color.black;
-	public Color nightImage = Color.white;
+	public SavedColor dayBackground = new SavedColor(1f, 1f, 1f, 0.7f);
+	public SavedColor nightBackground = new SavedColor(0f, 0f, 0f, 0.5f);
+	public SavedColor dayBorder = new SavedColor(Color.black);
+	public SavedColor nightBorder = new SavedColor(Color.white);
+	public SavedColor dayText = new SavedColor(Color.black);
+	public SavedColor nightText = new SavedColor(Color.white);
+	public SavedColor dayImage = new SavedColor(Color.black);
+	public SavedColor nightImage = new SavedColor(Color.white);
 
 	//Change background and text colors between night and day
 	public bool useDayNightCycle = true;
