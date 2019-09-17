@@ -9,7 +9,7 @@ public class SettingsManager : MonoBehaviour
 	public TMP_InputField subtitle;
 	public TMP_InputField dayClockFormat;
 	public TMP_InputField nightClockFormat;
-
+	public TMP_InputField iconOverride;
 	private void Awake()
 	{
 		SavedData.LoadGame();
@@ -18,6 +18,7 @@ public class SettingsManager : MonoBehaviour
 		subtitle.SetTextWithoutNotify(SavedData.data.subtitle);
 		dayClockFormat.SetTextWithoutNotify(SavedData.data.dayClockFormat);
 		nightClockFormat.SetTextWithoutNotify(SavedData.data.nightClockFormat);
+		iconOverride.SetTextWithoutNotify(SavedData.data.iconOverride);
 	}
 
 	private void SetContent()
@@ -26,6 +27,7 @@ public class SettingsManager : MonoBehaviour
 		SavedData.data.subtitle = subtitle.text;
 		SavedData.data.dayClockFormat = dayClockFormat.text;
 		SavedData.data.nightClockFormat = nightClockFormat.text;
+		SavedData.data.iconOverride = iconOverride.text;
 	}
 
 	public void SaveReturn()

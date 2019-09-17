@@ -133,4 +133,7 @@ public class SaveFile
 		{ CountdownTimer.Primary, new CountdownSettings() },
 		{ CountdownTimer.Secondary, new CountdownSettings() }
 	};
+
+	//Image overrides
+	public string iconOverride;
 }
