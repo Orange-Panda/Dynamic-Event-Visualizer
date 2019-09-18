@@ -34,6 +34,7 @@ public class Countdown : MonoBehaviour
 	{
 		textMesh = GetComponent<TextMeshProUGUI>();
 		StartCoroutine(DotIncrement());
+		if (!Settings.useCountdown) gameObject.SetActive(false);
 	}
 
 	private IEnumerator DotIncrement()

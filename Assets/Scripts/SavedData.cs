@@ -130,6 +130,6 @@ public class SaveFile
 	public Dictionary<CountdownTimer, CountdownSettings> countdowns = new Dictionary<CountdownTimer, CountdownSettings>
 	{
 		{ CountdownTimer.Primary, new CountdownSettings() },
-		{ CountdownTimer.Secondary, new CountdownSettings() }
+		{ CountdownTimer.Secondary, new CountdownSettings() { useCountdown = false } }
 	};
 }

@@ -12,6 +12,7 @@ public class SettingsManager : MonoBehaviour
 	public TMP_InputField searchTerm;
 
 	public ColorControl dayBG, nightBG, dayBorder, nightBorder, dayText, nightText, dayImage, nightImage;
+	public CountdownSetting primary, secondary;
 
 	private void Awake()
 	{
@@ -36,6 +37,9 @@ public class SettingsManager : MonoBehaviour
 		nightText.SetColor(SavedData.data.nightText.ToColor());
 		dayImage.SetColor(SavedData.data.dayImage.ToColor());
 		nightImage.SetColor(SavedData.data.nightImage.ToColor());
+
+		primary.SetComponentValue();
+		secondary.SetComponentValue();
 	}
 
 	private void WriteToData()
@@ -55,6 +59,9 @@ public class SettingsManager : MonoBehaviour
 		SavedData.data.nightText = new SavedColor(nightText.GetColor());
 		SavedData.data.dayImage = new SavedColor(dayImage.GetColor());
 		SavedData.data.nightImage = new SavedColor(nightImage.GetColor());
+
+		SavedData.data.countdowns[CountdownTimer.Primary] = primary.GetSettings();
+		SavedData.data.countdowns[CountdownTimer.Secondary] = secondary.GetSettings();
 	}
 
 	public void SaveReturn()
