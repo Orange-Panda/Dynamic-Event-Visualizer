@@ -101,9 +101,10 @@ public struct SavedColor
 public class SaveFile
 {
 	//Globals
-	public string title = "Event Name";
-	public string subtitle = "Have a great time!";
-	public bool useNightBG = true;
+	public string title = "Welcome to Event Visualizer";
+	public string subtitle = "Press the escape key to modify the properties.";
+	public string playingSearchTerm = " - YouTube";
+	public string iconOverride = "";
 
 	//Clock 
 	// {0} 24hr, {1} 12hr, {2} Minutes, {3} Seconds, {4} Milliseconds, {5} AM/PM
@@ -122,10 +123,8 @@ public class SaveFile
 
 	//Change background and text colors between night and day
 	public bool useDayNightCycle = true;
-
-	//Playing panel
 	public bool usePlayingPanel = true;
-	public string playingSearchTerm = " - YouTube";
+	public bool useNightBG = true;
 
 	//Countdowns
 	public Dictionary<CountdownTimer, CountdownSettings> countdowns = new Dictionary<CountdownTimer, CountdownSettings>
@@ -133,7 +132,4 @@ public class SaveFile
 		{ CountdownTimer.Primary, new CountdownSettings() },
 		{ CountdownTimer.Secondary, new CountdownSettings() }
 	};
-
-	//Image overrides
-	public string iconOverride;
 }

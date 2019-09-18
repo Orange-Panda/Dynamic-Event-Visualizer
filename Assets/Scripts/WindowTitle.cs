@@ -23,7 +23,7 @@ public class WindowTitle : MonoBehaviour
 
 	public GameObject[] musicObjects;
 
-	string[] lookups = { "- YouTube - Mozilla Firefox", "- YouTube Music - Mozilla Firefox", "- YouTube Music - Google Chrome" , "- YouTube - Google Chrome", "- YouTube Music", "- YouTube" };
+	string[] lookups = { "- YouTube - Mozilla Firefox", "- YouTube Music - Mozilla Firefox", "- YouTube Music - Google Chrome" , "- YouTube - Google Chrome", "- YouTube Music", SavedData.data.playingSearchTerm };
 
 	private void Start()
 	{
