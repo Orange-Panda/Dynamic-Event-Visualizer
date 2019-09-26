@@ -18,7 +18,7 @@ public class SettingsLoader : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
-			SceneManager.LoadScene("Settings");
+			SceneManager.LoadScene("Main");
 		}
 	}
 }
