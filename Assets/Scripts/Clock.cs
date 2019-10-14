@@ -5,17 +5,20 @@ using UnityEngine;
 public class Clock : MonoBehaviour
 {
 	private TextMeshProUGUI textMesh;
-
-	string TimeSuffix => DateTime.Now.Hour >= 12 ? " PM" : " AM";
-	public int HourTwelve => DateTime.Now.Hour == 0 ? 12 : (DateTime.Now.Hour - 1) % 12 + 1;
+	DateTime now;
+	string TimeSuffix => now.Hour >= 12 ? " PM" : " AM";
+	public int HourTwelve => now.Hour == 0 ? 12 : (now.Hour - 1) % 12 + 1;
 
 	private void Start()
 	{
 		textMesh = GetComponent<TextMeshProUGUI>();
+		InvokeRepeating("UpdateText", 0f, 0.1f);
 	}
 
-	private void Update()
+	private void UpdateText()
 	{
-		textMesh.SetText(string.Format(NightModeManager.NightTime ? SavedData.data.nightClockFormat : SavedData.data.dayClockFormat, DateTime.Now.Hour, HourTwelve, DateTime.Now.Minute.ToString("D2"), DateTime.Now.Second.ToString("D2"), DateTime.Now.Millisecond.ToString("D3"), TimeSuffix));
+		now = DateTime.Now;
+		string format = NightModeManager.nightTime ? SavedData.data.nightClockFormat : SavedData.data.dayClockFormat;
+		textMesh.SetText(string.Format(format, now.Hour, HourTwelve, now.Minute.ToString("D2"), now.Second.ToString("D2"), now.Millisecond.ToString("D3"), TimeSuffix));
 	}
 }

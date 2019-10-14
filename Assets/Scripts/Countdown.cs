@@ -11,53 +11,37 @@ public class Countdown : MonoBehaviour
 	private TimeSpan TimeLeft => Settings.objective - DateTime.Now;
 
 	int numberOfDots;
-	public int NumberOfDots
-	{
-		get
-		{
-			return numberOfDots;
-		}
-		set
-		{
-			if (value > 3)
-			{
-				numberOfDots = 1;
-			}
-			else
-			{
-				numberOfDots = value;
-			}
-		}
-	}
 
 	private void Start()
 	{
 		textMesh = GetComponent<TextMeshProUGUI>();
 		StartCoroutine(DotIncrement());
 		if (!Settings.useCountdown) gameObject.SetActive(false);
+		InvokeRepeating("UpdateText", 0f, 0.1f);
 	}
 
 	private IEnumerator DotIncrement()
 	{
 		while (true)
 		{
-			NumberOfDots++;
-			yield return new WaitForSeconds(NightModeManager.NightTime ? 3.5f : 0.75f);
+			numberOfDots = numberOfDots + 1 > 3 ? 1 : numberOfDots + 1;
+			yield return new WaitForSecondsRealtime(NightModeManager.nightTime ? 4f : 1f);
 		}
 	}
 
-	void Update()
+	void UpdateText()
 	{
-		if (TimeLeft.TotalSeconds > 0)
+		TimeSpan timeLeft = TimeLeft;
+		if (timeLeft.TotalSeconds > 0)
 		{
-			textMesh.SetText(string.Format(NightModeManager.NightTime ? Settings.nightTimeFormat : Settings.dayTimeFormat, 
-				(int)TimeLeft.TotalDays,        // {0}
-				(int)TimeLeft.TotalHours,	// {1}
-				TimeLeft.Hours,			// {2}
-				TimeLeft.Minutes.ToString("D2"),		//{3}
-				TimeLeft.Seconds.ToString("D2"),		//{4}
-				TimeLeft.Milliseconds.ToString("D3"),	//{5}
-				new string('.', NumberOfDots)));		//{6}
+			textMesh.SetText(string.Format(NightModeManager.nightTime ? Settings.nightTimeFormat : Settings.dayTimeFormat, 
+				(int)timeLeft.TotalDays,				//{0}
+				(int)timeLeft.TotalHours,               //{1}
+				timeLeft.Hours,                         //{2}
+				timeLeft.Minutes.ToString("D2"),        //{3}
+				timeLeft.Seconds.ToString("D2"),        //{4}
+				timeLeft.Milliseconds.ToString("D3"),	//{5}
+				new string('.', numberOfDots)));		//{6}
 		}
 		else
 		{

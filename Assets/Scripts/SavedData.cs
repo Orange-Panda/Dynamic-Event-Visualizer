@@ -103,7 +103,7 @@ public class SaveFile
 	//Globals
 	public string title = "Welcome to Event Visualizer";
 	public string subtitle = "Press the escape key to modify the properties.";
-	public string playingSearchTerm = " - YouTube";
+	public string playingSearchTerm = "- YouTube - Google Chrome";
 	public string iconOverride = "";
 
 	//Clock 

@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections;
+﻿// https://github.com/ssvegaraju/GDC_Title_Screen/blob/master/Assets/Scripts/GetWindowTitle.cs
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Runtime.InteropServices;
 using System.Text;
 using TMPro;
+using UnityEngine;
 
-// Get the title of the Google Chrome tab playing YouTube
+/// <summary>
+/// Gets the name of a window playing 
+/// </summary>
 public class WindowTitle : MonoBehaviour
 {
 	private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
@@ -19,58 +20,40 @@ public class WindowTitle : MonoBehaviour
 	[DllImport("user32.dll")]
 	private static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
 
-	private TextMeshProUGUI _text;
-
+	private const float UpdateTextRate = 1f;
+	private TextMeshProUGUI textMesh;
 	public GameObject[] musicObjects;
-
-	string[] lookups = { "- YouTube - Mozilla Firefox", "- YouTube Music - Mozilla Firefox", "- YouTube Music - Google Chrome" , "- YouTube - Google Chrome", "- YouTube Music" };
 
 	private void Start()
 	{
-		_text = GetComponent<TextMeshProUGUI>();
-		StartCoroutine(UpdateText());
+		textMesh = GetComponent<TextMeshProUGUI>();
+		InvokeRepeating("UpdateText", 0f, UpdateTextRate);
 	}
 
-	private IEnumerator UpdateText()
+	private void UpdateText()
 	{
-		while (true)
-		{
-			string windowName = " ";
-			string succesfulLookup = " ";
-			// Look for a window with this string as its name
-			foreach (string lookup in lookups)
-			{
-				if ((windowName = GetWindowText(FindWindowsWithText(lookup).FirstOrDefault())) != string.Empty)
-				{
-					succesfulLookup = lookup;
-					break;
-				}
-			}
-			
-			if(windowName == string.Empty)
-			{
-				foreach(GameObject go in musicObjects)
-				{
-					go.SetActive(false);
-				}
-			}
-			else
-			{
-				foreach (GameObject go in musicObjects)
-				{
-					go.SetActive(true);
-				}
-			}
-			
-			// Format the window title
-			_text.text = windowName.Replace(succesfulLookup, "");
+		string windowName = GetWindowText(FindWindowsWithText(SavedData.data.playingSearchTerm).FirstOrDefault());
 
-			// Wait a bit so we call this code less frequently
-			yield return new WaitForSeconds(0.5f);
+		if (!string.IsNullOrEmpty(windowName))
+		{
+			textMesh.SetText(windowName.Replace(SavedData.data.playingSearchTerm, ""));
+		}
+		else
+		{
+			textMesh.SetText("");
+		}
+
+		foreach (GameObject musicObject in musicObjects)
+		{
+			musicObject.SetActive(!string.IsNullOrEmpty(windowName));
 		}
 	}
 
-	// Converts a handler to the window's title
+	/// <summary>
+	/// Gets the window title string from the pointer.
+	/// </summary>
+	/// <param name="hWnd">Pointer to the window</param>
+	/// <returns>String for the title of the window.</returns>
 	private static string GetWindowText(IntPtr hWnd)
 	{
 		int size = GetWindowTextLength(hWnd);
