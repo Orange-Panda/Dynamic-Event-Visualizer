@@ -105,6 +105,7 @@ public class SaveFile
 	public string subtitle = "Press the escape key to modify the properties.";
 	public string playingSearchTerm = "- YouTube - Google Chrome";
 	public string iconOverride = "";
+	public string qrOverride = "";
 
 	//Clock 
 	// {0} 24hr, {1} 12hr, {2} Minutes, {3} Seconds, {4} Milliseconds, {5} AM/PM

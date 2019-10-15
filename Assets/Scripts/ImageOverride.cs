@@ -7,16 +7,20 @@ using UnityEngine.UI;
 public class ImageOverride : MonoBehaviour
 {
 	private RawImage rawImage;
+	public OverrideTarget overrideTarget;
+	private readonly Dictionary<OverrideTarget, string> textureLocation = new Dictionary<OverrideTarget, string>() {
+		{ OverrideTarget.Icon, SavedData.data.iconOverride },
+		{ OverrideTarget.QR, SavedData.data.qrOverride }};
 
 	void Start()
-    {
+	{
 		rawImage = GetComponent<RawImage>();
 		StartCoroutine(LoadImage());
-    }
+	}
 
 	IEnumerator LoadImage()
 	{
-		using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(SavedData.data.iconOverride))
+		using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(textureLocation[overrideTarget]))
 		{
 			yield return uwr.SendWebRequest();
 
@@ -31,4 +35,6 @@ public class ImageOverride : MonoBehaviour
 			}
 		}
 	}
+
+	public enum OverrideTarget { Icon, QR }
 }
