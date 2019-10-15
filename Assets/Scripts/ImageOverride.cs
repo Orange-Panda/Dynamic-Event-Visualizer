@@ -8,9 +8,11 @@ public class ImageOverride : MonoBehaviour
 {
 	private RawImage rawImage;
 	public OverrideTarget overrideTarget;
-	private readonly Dictionary<OverrideTarget, string> textureLocation = new Dictionary<OverrideTarget, string>() {
+	private Dictionary<OverrideTarget, string> textureLocation = new Dictionary<OverrideTarget, string>()
+	{
 		{ OverrideTarget.Icon, SavedData.data.iconOverride },
-		{ OverrideTarget.QR, SavedData.data.qrOverride }};
+		{ OverrideTarget.QR, SavedData.data.qrOverride }
+	};
 
 	void Start()
 	{
