@@ -8,11 +8,6 @@ public class ImageOverride : MonoBehaviour
 {
 	private RawImage rawImage;
 	public OverrideTarget overrideTarget;
-	private Dictionary<OverrideTarget, string> textureLocation = new Dictionary<OverrideTarget, string>()
-	{
-		{ OverrideTarget.Icon, SavedData.data.iconOverride },
-		{ OverrideTarget.QR, SavedData.data.qrOverride }
-	};
 
 	void Start()
 	{
@@ -20,19 +15,34 @@ public class ImageOverride : MonoBehaviour
 		StartCoroutine(LoadImage());
 	}
 
+	private static string GetLocation(OverrideTarget target)
+	{
+		switch (target)
+		{
+			case OverrideTarget.Icon:
+				return SavedData.data.iconOverride;
+			case OverrideTarget.QR:
+				return SavedData.data.qrOverride;
+			default:
+				return "";
+		}
+	}
+
 	IEnumerator LoadImage()
 	{
-		using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(textureLocation[overrideTarget]))
+		using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(GetLocation(overrideTarget)))
 		{
 			yield return uwr.SendWebRequest();
 
 			if (uwr.isNetworkError || uwr.isHttpError)
 			{
 				Debug.Log(uwr.error);
+				rawImage.enabled = false;
 			}
 			else
 			{
 				// Get downloaded asset bundle
+				rawImage.enabled = true;
 				rawImage.texture = DownloadHandlerTexture.GetContent(uwr);
 			}
 		}

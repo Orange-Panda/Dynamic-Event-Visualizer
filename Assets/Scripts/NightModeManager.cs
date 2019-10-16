@@ -17,7 +17,7 @@ public class NightModeManager : MonoBehaviour
 
 	private void Start()
 	{
-		InvokeRepeating("NightTimeCheck", 0, 10f);
+		InvokeRepeating("NightTimeCheck", 0, 1f);
 	}
 
 	public void NightTimeCheck()
