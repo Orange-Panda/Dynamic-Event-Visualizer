@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -20,9 +19,9 @@ public class ImageOverride : MonoBehaviour
 		switch (target)
 		{
 			case OverrideTarget.Icon:
-				return SavedData.data.iconOverride;
+				return SavedData.data.GetString("iconOverride");
 			case OverrideTarget.QR:
-				return SavedData.data.qrOverride;
+				return SavedData.data.GetString("qrOverride");
 			default:
 				return "";
 		}

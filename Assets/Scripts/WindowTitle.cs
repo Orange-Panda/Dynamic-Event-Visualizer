@@ -23,20 +23,22 @@ public class WindowTitle : MonoBehaviour
 	private const float UpdateTextRate = 1f;
 	private TextMeshProUGUI textMesh;
 	public GameObject[] musicObjects;
+	private string searchTerm;
 
 	private void Start()
 	{
 		textMesh = GetComponent<TextMeshProUGUI>();
+		searchTerm = SavedData.data.GetString("searchTerm", "YouTube");
 		InvokeRepeating("UpdateText", 0f, UpdateTextRate);
 	}
 
 	private void UpdateText()
 	{
-		string windowName = GetWindowText(FindWindowsWithText(SavedData.data.playingSearchTerm).FirstOrDefault());
+		string windowName = GetWindowText(FindWindowsWithText(searchTerm).FirstOrDefault());
 
 		if (!string.IsNullOrEmpty(windowName))
 		{
-			textMesh.SetText(windowName.Replace(SavedData.data.playingSearchTerm, ""));
+			textMesh.SetText(windowName.Replace(searchTerm, ""));
 		}
 		else
 		{

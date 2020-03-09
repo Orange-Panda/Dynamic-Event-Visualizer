@@ -10,8 +10,8 @@ public class SettingsLoader : MonoBehaviour
 	private void Awake()
 	{
 		SavedData.LoadGame();
-		title.SetText(SavedData.data.title);
-		subtitle.SetText(SavedData.data.subtitle);
+		title.SetText(SavedData.data.GetString("title"));
+		subtitle.SetText(SavedData.data.GetString("subtitle"));
 	}
 
 	void Update()

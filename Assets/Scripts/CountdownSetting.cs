@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CountdownSetting : MonoBehaviour
 {
-	public CountdownTimer timer;
+	public string key;
 
 	public Toggle use;
 	public TMP_InputField dayFormat;
@@ -18,9 +18,14 @@ public class CountdownSetting : MonoBehaviour
 	public TMP_InputField hour;
 	public TMP_InputField minute;
 
+	private void Start()
+	{
+		SetComponentValue();
+	}
+
 	public void SetComponentValue()
 	{
-		CountdownSettings settings = SavedData.data.countdowns[timer];
+		CountdownSettings settings = SavedData.data.GetCountdownSettings(key, new CountdownSettings());
 		use.isOn = settings.useCountdown;
 		dayFormat.SetTextWithoutNotify(settings.dayTimeFormat);
 		nightFormat.SetTextWithoutNotify(settings.nightTimeFormat);

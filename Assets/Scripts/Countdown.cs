@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Countdown : MonoBehaviour
 {
-	public CountdownTimer timer;
+	public string key;
 	private TextMeshProUGUI textMesh;
-	private CountdownSettings Settings => SavedData.data.countdowns[timer];
+	private CountdownSettings Settings => SavedData.data.GetCountdownSettings(key, new CountdownSettings());
 	private TimeSpan TimeLeft => Settings.objective - DateTime.Now;
 
 	int numberOfDots;
